@@ -25,6 +25,7 @@ const canvas = document.getElementById("jsCanvas");
 const ctx = canvas.getContext("2d");
 const colors = document.getElementsByClassName("jsColor");
 const range = document.getElementById("jaRange");
+const mode = document.getElementById("jsMode");
 
 
 // canvas는 두 개의 사이즈를 가져야 한다.
@@ -36,6 +37,7 @@ ctx.strokeStyle = "#2c2c2c";
 ctx.lineWidth = 2.5;
 
 let painting = false;
+let filling = false;
 
 function stopPainting() {
     painting = false;
@@ -73,6 +75,15 @@ function handleRangeChange(event) {
 
 }
 
+function handleModeClick() {
+    if (filling === true) {
+        filling = false;
+        mode.innerText = "Fill";
+    } else {
+        filling = true;
+        mode.innerText = "Paint";
+    }
+}
 if (canvas) {
     canvas.addEventListener("mousemove", onMouseMove);
     canvas.addEventListener("mousedown", startPainting);
@@ -91,7 +102,9 @@ if (range) {
     range.addEventListener("input", handleRangeChange)
 }
 
-
+if (mode) {
+    mode.addEventListener("click", handleModeClick);
+}
 
 
 
