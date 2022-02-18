@@ -24,6 +24,7 @@
 const canvas = document.getElementById("jsCanvas");
 const ctx = canvas.getContext("2d");
 const colors = document.getElementsByClassName("jsColor");
+const range = document.getElementById("jaRange");
 
 
 // canvas는 두 개의 사이즈를 가져야 한다.
@@ -65,6 +66,13 @@ function handleColorClick(event) {
     ctx.strokeStyle = color;
 }
 
+function handleRangeChange(event) {
+    // console.log(event);
+    const size = event.target.value;
+    ctx.lineWidth = size;
+
+}
+
 if (canvas) {
     canvas.addEventListener("mousemove", onMouseMove);
     canvas.addEventListener("mousedown", startPainting);
@@ -78,7 +86,10 @@ if (canvas) {
 
 Array.from(colors).forEach(color => color.addEventListener("click", handleColorClick));
 
-
+console.dir(range);
+if (range) {
+    range.addEventListener("input", handleRangeChange)
+}
 
 
 
