@@ -1,8 +1,34 @@
 // canvas란 요소는 context를 통해 픽셀에 접근할 수 있다. 먼저 canvas.getContext()를 통해 context variable을 만든다.
+// canvas는 HTML5의 한 요소
+// canvas 안에 있는 픽셀들을 다루는 기능이 있다.
+// canvas의 선택자를 통해 CSS에서 width와 height를 줘야 볼 수 있다.
 
+
+// 그 후 윈도우가 얼만큼의 pixcel 크기와 넓이를 다루는지 canvas에게 알려줘야 한다. (width와 height을)
+
+// canvas의 context를 갖는 것도 필요하다.
+// context에서 픽셀들을 컨트롤한다.
+
+// context.strokeStyle은 선들의 색상
+// context.lineWidth는 그 선의 너비
+
+// context.beginPath는 path를 시작한다.
+// path = line , path는 선이다
+// context.moveTo(x, y) : x, y 좌표를 path를 옮기는 작업
+
+// context.lineTo(x, y) : path의 이전 위치에서부터 지금 위치까지 선을 만들어주는 작업
+// context.stroke : 획을 긋는다. 
+
+
+///////////////////////////////////////////////////
 const canvas = document.getElementById("jsCanvas");
 const ctx = canvas.getContext("2d");
+const colors = document.getElementsByClassName("jsColor");
 
+
+// canvas는 두 개의 사이즈를 가져야 한다.
+// 먼저 css 사이즈를 가져야 하고,
+// element에서 pixcel을 다룰 수 있도록 width와 height을 지정해줘야 한다. -> 실제 픽셀 사이즈를 주는 것(pixel modifier에 사이즈 지정)
 canvas.width = 700;
 canvas.height = 700;
 ctx.strokeStyle = "#2c2c2c";
@@ -24,21 +50,20 @@ function onMouseMove(event) {
     if (!painting) {
         ctx.beginPath();
         ctx.moveTo(x, y);
-        console.log(x, y);
+        // console.log(x, y);
     } else {
         ctx.lineTo(x, y);
         ctx.stroke();
     }
 }
 
-function onMouseDown(event) {
-    painting = true;
+function handleColorClick(event) {
+    console.log(event);
+    console.log(event.target.style);
+    const color = event.target.style.backgroundColor;
+    console.log(color);
+    ctx.strokeStyle = color;
 }
-
-// function onMouseUp(event) {
-//     stopPainting();
-// }
-
 
 if (canvas) {
     canvas.addEventListener("mousemove", onMouseMove);
@@ -46,6 +71,17 @@ if (canvas) {
     canvas.addEventListener("mouseup", stopPainting);
     canvas.addEventListener("mouseleave", stopPainting);
 }
+
+// array.from 메소드는 object를 array로 만들어준다.
+//console.log(colors);
+//console.log(Array.from(colors));
+
+Array.from(colors).forEach(color => color.addEventListener("click", handleColorClick));
+
+
+
+
+
 
 
 // const canvas1 = document.querySelector('#jsCanvas');
