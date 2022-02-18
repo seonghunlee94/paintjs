@@ -26,6 +26,7 @@ const ctx = canvas.getContext("2d");
 const colors = document.getElementsByClassName("jsColor");
 const range = document.getElementById("jaRange");
 const mode = document.getElementById("jsMode");
+const saveBtn = document.getElementById("jsSave");
 
 const INITIAL_COLOR = "#2c2c2c";
 const CANVAS_SIZE = 700;
@@ -34,6 +35,9 @@ const CANVAS_SIZE = 700;
 // element에서 pixcel을 다룰 수 있도록 width와 height을 지정해줘야 한다. -> 실제 픽셀 사이즈를 주는 것(pixel modifier에 사이즈 지정)
 canvas.width = CANVAS_SIZE;
 canvas.height = CANVAS_SIZE;
+
+ctx.fillStyle = "white";
+ctx.fillRect(0, 0, canvas.width, canvas.height);
 ctx.strokeStyle = INITIAL_COLOR;
 ctx.fillStyle = INITIAL_COLOR;
 ctx.lineWidth = 2.5;
@@ -97,7 +101,21 @@ function handleCanvasClick() {
 
         ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
+}
 
+function handleCM(event) {
+    console.log(event);
+    event.preventDefault();
+}
+
+function handleSaveClick() {
+    const image = canvas.toDataURL();
+    console.log(image);
+    const link = document.createElement("a");
+    link.href = image;
+    link.download = "paintJS[EXPORT]";
+    console.log(link);
+    link.click();
 }
 
 if (canvas) {
@@ -105,7 +123,8 @@ if (canvas) {
     canvas.addEventListener("mousedown", startPainting);
     canvas.addEventListener("mouseup", stopPainting);
     canvas.addEventListener("mouseleave", stopPainting);
-    canvas.addEventListener("click", handleCanvasClick)
+    canvas.addEventListener("click", handleCanvasClick);
+    canvas.addEventListener("contextmenu", handleCM);
 }
 
 // array.from 메소드는 object를 array로 만들어준다.
@@ -123,6 +142,9 @@ if (mode) {
     mode.addEventListener("click", handleModeClick);
 }
 
+if (saveBtn) {
+    saveBtn.addEventListener("click", handleSaveClick);
+}
 
 
 // const canvas1 = document.querySelector('#jsCanvas');
